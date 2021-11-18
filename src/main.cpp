@@ -5,11 +5,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "scene_parser.hpp"
 #include "image.hpp"
-#include "camera.hpp"
-#include "group.hpp"
-#include "light.hpp"
 
 #include <string>
 
