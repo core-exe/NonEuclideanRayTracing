@@ -1,6 +1,0 @@
-/home/class90_2019012387/workspace/ComputerGraphics/homework1/build/CMakeFiles/rebuild_cache.dir
-/home/class90_2019012387/workspace/ComputerGraphics/homework1/build/CMakeFiles/edit_cache.dir
-/home/class90_2019012387/workspace/ComputerGraphics/homework1/build/CMakeFiles/PA1.dir
-/home/class90_2019012387/workspace/ComputerGraphics/homework1/build/deps/vecmath/CMakeFiles/rebuild_cache.dir
-/home/class90_2019012387/workspace/ComputerGraphics/homework1/build/deps/vecmath/CMakeFiles/edit_cache.dir
-/home/class90_2019012387/workspace/ComputerGraphics/homework1/build/deps/vecmath/CMakeFiles/vecmath.dir
