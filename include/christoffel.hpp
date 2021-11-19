@@ -5,6 +5,9 @@ class Christoffel3 {
     private:
     Metric3* g;
     public:
+    Christoffel3(Metric3* _g) {
+        g = _g;
+    }
     void val(Vector3f r, float gamma[3][3][3])
     {
         // X[i][j][k] = Gamma^i_{jk}
@@ -24,6 +27,9 @@ class Christoffel4 {
     private:
     Metric4* g;
     public:
+    Christoffel4(Metric4* _g) {
+        g = _g;
+    }
     void val(Vector4f r, float gamma[4][4][4])
     {
         // X[i][j][k] = Gamma^i_{jk}
