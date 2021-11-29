@@ -12,3 +12,19 @@ class Geodesic3 {
         geometry = _geometry;
     }
 };
+
+class Geodesic4 {
+    public:
+    Vector4f r;
+    Vector4f dr;
+    Geometry4* geometry;
+    Geodesic4(Vector4f _r, Vector4f _dr, Geometry4* _geometry) {
+        r = _r;
+        dr = _r;
+        geometry = _geometry;
+    }
+};
+
+class Ray4: public Geodesic4{
+
+};
