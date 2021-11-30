@@ -34,5 +34,4 @@ class Group: public Object3{
         }
         return ret;
     }
-
 };
