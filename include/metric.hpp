@@ -1,4 +1,5 @@
-#include <vecmath.h>
+# pragma once
+# include <vecmath.h>
 
 class Metric3 {
     public:

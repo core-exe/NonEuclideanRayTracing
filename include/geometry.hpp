@@ -1,6 +1,7 @@
-#include <vecmath.h>
-#include "metric.hpp"
-#include "christoffel.hpp"
+# pragma once
+# include <vecmath.h>
+# include "metric.hpp"
+# include "christoffel.hpp"
 
 class Geometry3 {
     public:

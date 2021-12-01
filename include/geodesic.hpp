@@ -1,6 +1,7 @@
-#include <vecmath.h>
-#include "trojectory.hpp"
-#include "geometry.hpp"
+# pragma once
+# include <vecmath.h>
+# include "trojectory.hpp"
+# include "geometry.hpp"
 
 class Geodesic3 {
     public:

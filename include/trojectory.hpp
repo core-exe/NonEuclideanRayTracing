@@ -1,8 +1,10 @@
+# pragma once
 # include <vecmath.h>
 # include <vector>
 # include "geometry.hpp"
 using namespace std;
 
+class Trojectory4;
 class VectorOnTrojectory4{
     public:
     Trojectory4* trojectory;
@@ -27,17 +29,7 @@ class VectorOnTrojectory4{
         return Vector4f();
     }
 
-    Vector4f covariant_derivative_freeze(){
-        // return the covariant derivative given component unchanged
-        Vector4f dr = trojectory->dr;
-        Vector4f Dv = Vector4f();
-        float gamma[4][4][4];
-        for(int i=0; i<4; i++)
-            for(int j=0; j<4; j++)
-                for(int k=0; k<4; k++)
-                    Dv[i] += v[j]*dr[k];
-        return Dv;
-    }
+    Vector4f covariant_derivative_freeze();
 };
 
 class Trojectory4{
@@ -70,7 +62,7 @@ class Trojectory4{
         attached_vectors.push_back(v);
     }
 
-    virtual void update_vectors(float dt){
+    void update_vectors(float dt){
         for(int i=0; i<attached_vectors.size(); i++){
             attached_vectors[i].step(dt);
         }
@@ -87,6 +79,19 @@ class Trojectory4{
     }
 
     virtual void step(float dt){
-        // update in total
+        update_vectors(dt);
+        update_coor(dt);
+        update_local_geometry();
     }
 };
+
+Vector4f VectorOnTrojectory4::covariant_derivative_freeze(){
+    Vector4f dr = trojectory->dr;
+    Vector4f Dv = Vector4f();
+    float gamma[4][4][4];
+    for(int i=0; i<4; i++)
+        for(int j=0; j<4; j++)
+            for(int k=0; k<4; k++)
+                Dv[i] += v[j]*dr[k];
+    return Dv;
+}

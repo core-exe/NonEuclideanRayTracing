@@ -1,4 +1,5 @@
-#include <vecmath.h>
+# pragma once
+# include <vecmath.h>
 
 float dot(Vector4f a, Vector4f b, Matrix4f g){
     float d = 0;

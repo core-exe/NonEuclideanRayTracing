@@ -1,3 +1,4 @@
+# pragma once
 # include <vecmath.h>
 # include <vector>
 # include "geodesic.hpp"

@@ -1,5 +1,6 @@
-#include <vecmath.h>
-#include "metric.hpp"
+# pragma once
+# include <vecmath.h>
+# include "metric.hpp"
 
 class Christoffel3 {
     private:
