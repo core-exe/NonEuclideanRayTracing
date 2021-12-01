@@ -2,7 +2,7 @@
 # include <vecmath.h>
 # include <vector>
 # include "texture.hpp"
-# include "geodesic.hpp"
+# include "ray.hpp"
 using namespace std;
 
 class Hit4 {

@@ -2,7 +2,11 @@
 # include <vecmath.h>
 # include "metric.hpp"
 # include "christoffel.hpp"
+# include "hit.hpp"
+# include "ray.hpp"
 
+class Hit4;
+class Ray4;
 class Geometry3 {
     public:
     Metric3* g;
@@ -26,5 +30,8 @@ class Geometry4 {
     }
     virtual float get_dt(Vector4f r, Vector4f dr) {
         return 1.0;
+    }
+    virtual bool is_terminal(Ray4 ray, Hit4& hit){
+        return false;
     }
 };

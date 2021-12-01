@@ -2,7 +2,7 @@
 # include <vecmath.h>
 # include <vector>
 # include "hit.hpp"
-# include "geodesic.hpp"
+# include "ray.hpp"
 using namespace std;
 
 class Object3{// a static object in 4D
