@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-PROJECT(PROJECT CXX)
+PROJECT(TEST_SCMETRIC_DG CXX)
 
 IF(NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Release)
@@ -8,8 +8,23 @@ ENDIF()
 ADD_SUBDIRECTORY(deps/vecmath)
 
 SET(PROJECT_SOURCES
+        src/camera.cpp
+        src/christoffel.cpp
+        src/geodesic.cpp
+        src/geometry.cpp
+        src/group.cpp
+        src/hit.cpp
         src/image.cpp
-        src/main.cpp)
+        src/metric.cpp
+        src/object.cpp
+        src/observer.cpp
+        src/ray.cpp
+        src/scene.cpp
+        src/texture.cpp
+        src/trajectory.cpp
+        src/utils.cpp
+        executable_src/test_scmetric_dg.cpp
+        )
 
 SET(PROJECT_INCLUDES
         include/camera.hpp

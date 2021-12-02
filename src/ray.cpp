@@ -5,7 +5,7 @@
 # include "trajectory.hpp"
 
 
-Ray4::Ray4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, float _importance = 1.){
+Ray4::Ray4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, float _importance){
     r = _r;
     dr = _dr;
     geometry = _geometry;
@@ -15,7 +15,7 @@ Ray4::Ray4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, float _importance = 
     importance = _importance;
 }
 
-Ray4::Ray4(Vector4f _r, Vector3f spacial_dir, Geometry4* _geometry, float _importance = 1.){
+Ray4::Ray4(Vector4f _r, Vector3f spacial_dir, Geometry4* _geometry, float _importance){
     r = _r;
     geometry = _geometry;
     update_local_geometry();

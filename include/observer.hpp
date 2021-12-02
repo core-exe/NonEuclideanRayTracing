@@ -2,7 +2,6 @@
 # include <vecmath.h>
 # include "trajectory.hpp"
 # include <vector>
-# include "utils.hpp"
 using namespace std;
 
 class Observer4;
