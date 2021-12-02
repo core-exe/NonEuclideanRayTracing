@@ -38,6 +38,7 @@ class Observer4: public Trajectory4{
     virtual void correction();
     virtual void update_frame(float dt);
     void step(float dt);
+    float get_proper_time(float dt);
 };
 
 class GyroscopeObserver4: public Observer4{

@@ -5,13 +5,24 @@
 # include "trajectory.hpp"
 
 
-Ray4::Ray4(Vector4f _r, Vector4f _dr, Geometry4* _geometry){
+Ray4::Ray4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, float _importance = 1.){
     r = _r;
     dr = _dr;
     geometry = _geometry;
     attached_vectors = vector<VectorOnTrajectory4>();
     update_local_geometry();
     is_ddr_update = false;
+    importance = _importance;
+}
+
+Ray4::Ray4(Vector4f _r, Vector3f spacial_dir, Geometry4* _geometry, float _importance = 1.){
+    r = _r;
+    geometry = _geometry;
+    update_local_geometry();
+    dr = get_negative_null_vector(spacial_dir, g);
+    attached_vectors = vector<VectorOnTrajectory4>();
+    is_ddr_update = false;
+    importance = _importance;
 }
 
 Vector4f Ray4::dr_equivalent(float dt){
@@ -24,7 +35,6 @@ float Ray4::inv_frequency(){
 }
 
 Vector3f Ray4::get_spacial_direction(){
-    // the direction ray actually proceeds
-    // the in ray will actually point away from the surface
+    // the in ray will point to the surface, not the propagation direction
     return dr.yzw().normalized();
 }

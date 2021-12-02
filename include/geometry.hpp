@@ -5,6 +5,7 @@ class Hit4;
 class Ray4;
 class Christoffel4;
 class Metric4;
+class Observer4;
 
 class Geometry4 {
     public:
@@ -13,4 +14,5 @@ class Geometry4 {
     Geometry4(Metric4* _g);
     virtual float get_dt(Vector4f r, Vector4f dr);
     virtual bool is_terminal(Ray4 ray, Hit4& hit);
+    virtual bool is_terminal(Observer4* observer);
 };
