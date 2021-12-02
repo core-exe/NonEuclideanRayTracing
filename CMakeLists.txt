@@ -12,7 +12,21 @@ SET(PROJECT_SOURCES
         src/main.cpp)
 
 SET(PROJECT_INCLUDES
+        include/camera.hpp
+        include/christoffel.hpp
+        include/geodesic.hpp
+        include/geometry.hpp
+        include/group.hpp
+        include/hit.hpp
         include/image.hpp
+        include/metric.hpp
+        include/object.hpp
+        include/observer.hpp
+        include/ray.hpp
+        include/scene.hpp
+        include/texture.hpp
+        include/trajectory.hpp
+        include/utils.hpp
         )
 
 SET(CMAKE_CXX_STANDARD 11)

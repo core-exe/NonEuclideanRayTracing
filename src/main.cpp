@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "image.hpp"
+#include "camera.hpp"
 
 #include <string>
 
