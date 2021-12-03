@@ -17,8 +17,8 @@ Scene4::Scene4(Geometry4* _geometry, Group* _group, Camera4* _camera){
     camera = _camera;
 }
 
-float Scene4::get_dt_geometry(Vector4f r, Vector4f dr) {
-    float t_geometry = geometry->get_dt(r, dr);
+float Scene4::get_dt_geometry(Trajectory4* trajectory) {
+    float t_geometry = geometry->get_dt(trajectory);
     return t_geometry;
 }
 
@@ -26,7 +26,7 @@ Vector3f Scene4::get_color(Ray4 ray){
     Hit4 hit;
     while(!geometry->is_terminal(ray, hit))
     {
-        float dt_max = get_dt_geometry(ray.r, ray.dr);
+        float dt_max = get_dt_geometry(&ray);
         if(group->intersect(ray, dt_max, hit))
             break;
         ray.step(dt_max);
@@ -47,7 +47,7 @@ double Scene4::move_camera(float delta_t){
     double proper_time_total=0.;
     while (!geometry->is_terminal(camera->observer))
     {
-        float dt = get_dt_geometry(camera->observer->r, camera->observer->dr);
+        float dt = get_dt_geometry(camera->observer);
         if(dt < delta_t)
             delta_t -= dt;
         else

@@ -7,7 +7,7 @@
 
 Ray4::Ray4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, float _importance){
     r = _r;
-    dr = _dr;
+    dr = _dr/_dr[0];
     geometry = _geometry;
     attached_vectors = vector<VectorOnTrajectory4>();
     update_local_geometry();

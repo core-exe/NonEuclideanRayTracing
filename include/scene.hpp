@@ -7,6 +7,7 @@ class Camera4;
 class Ray4;
 class Hit4;
 class Image;
+class Trajectory4;
 
 class Scene4 {
     public:
@@ -21,7 +22,7 @@ class Scene4 {
     Scene4(Geometry4* _geometry, Group* _group, Camera4* _camera);
     ~Scene4(){}
 
-    float get_dt_geometry(Vector4f r, Vector4f dr);
+    float get_dt_geometry(Trajectory4* trajectory);
     Vector3f get_color(Ray4 ray);
     double move_camera(float delta_t);
     Image shot();

@@ -56,7 +56,7 @@ void Trajectory4::update_vectors(float dt){
 void Trajectory4::update_local_geometry(){
     g = geometry->g->val(r);
     geometry->g->d(r, dg);
-    geometry->gamma->val(r, dg);
+    geometry->gamma->val(r, gamma);
 }
 
 void Trajectory4::update_coor(float dt){
