@@ -18,7 +18,6 @@ class Object3{// a static object in 4D
     ~Object3(){}
     
     virtual bool intersect(Ray4 ray_in, float dt_max, Hit4& hit);
-    virtual Vector3f rel_direction(Vector3f v);
-    virtual Vector3f from_rel_direction(Vector3f v);
-    vector<Ray4> get_out_rays(Vector3f abs_direction, Vector3f hit_pos, Vector4f hit_r);
+    virtual Vector3f normal(Vector3f hit_pos);
+    vector<Ray4> get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit_r);
 };

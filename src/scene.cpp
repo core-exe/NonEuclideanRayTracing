@@ -38,7 +38,7 @@ Vector3f Scene4::get_color(Ray4 ray){
         else
             colors.push_back(Vector3f());
     }
-    return hit.hit_texture->color(hit.hit_pos_texture, hit.in_direction, hit.out_direction, colors);
+    return hit.hit_texture->color(hit.hit_pos_texture, hit.in_cosine, hit.out_cosine, colors);
 }
 
 double Scene4::move_camera(float delta_t){

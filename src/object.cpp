@@ -19,22 +19,20 @@ bool Object3::intersect(Ray4 ray_in, float dt_max, Hit4& hit){
     return false;
 }
 
-Vector3f Object3::rel_direction(Vector3f v){
-    return v;
+Vector3f Object3::normal(Vector3f hit_pos){
+    return Vector3f();
 }
 
-Vector3f Object3::from_rel_direction(Vector3f v){
-    return v;
-}
-
-vector<Ray4> Object3::get_out_rays(Vector3f abs_direction, Vector3f hit_pos, Vector4f hit_r){
-    Vector3f rel_in = rel_direction(abs_direction);
-    vector<Vector4f> out_directions = texture->get_out_directions(abs_direction, hit_pos);
-    vector<Ray4> out_rays = vector<Ray4>();
-    for(int i=0; i<out_directions.size(); i++){
-        Vector3f spacial_direction = from_rel_direction(out_directions[i].yzw());
-        float importance = out_directions[i][0];
-        out_rays.push_back(Ray4(hit_r, spacial_direction, geometry, importance));
+vector<Ray4> Object3::get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit_r){
+    Vector3f n = normal(hit_pos);
+    in_direction.normalize();
+    float in_cos = Vector3f::dot(n, in_direction); // negative.
+    Vector3f tangent = (in_direction - in_cos * n).normalized();
+    vector<Vector2f> out_cos = texture->get_out_cosine(hit_pos, in_cos);
+    vector<Ray4> out_ray = vector<Ray4>();
+    for(int i=0; i<out_cos.size(); i++){
+        Vector3f space_direction = n*out_cos[i][1] + tangent*sqrt(1-pow(out_cos[i][1], 2));
+        out_ray.push_back(Ray4(hit_r, space_direction, geometry, out_cos[i][0]));
     }
-    return out_rays;
+    return out_ray;
 }

@@ -14,5 +14,5 @@ Vector4f get_negative_null_vector(Vector3f v, Matrix4f g){
     float b = g(1,0)+g(2,0)+g(3,0);
     float c = Vector3f::dot(v, g.getSubmatrix3x3(1,1)*v);
     float v0 = (-b-sqrt(b*2-4*a*c))/(2*a);
-    return Vector4f(v0, v) / v0;
+    return Vector4f(v0, v) / (-v0);
 }

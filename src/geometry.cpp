@@ -38,7 +38,7 @@ float SchwartzchildGeometry::get_dt(Trajectory4* trajectory) {
     float r = trajectory->r.yzw().length();
     float v = trajectory->dr.yzw().length();
     float a = trajectory->get_ddr().yzw().length();
-    return min(dt_eps*r/v, sqrt(2*dt_eps*r/a));
+    return min(min(dt_eps*r/v, sqrt(2*dt_eps*r/a)), dt_eps*r);
 }
 
 bool SchwartzchildGeometry::is_terminal(Ray4 ray, Hit4& hit){
