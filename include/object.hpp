@@ -19,5 +19,5 @@ class Object3{// a static object in 4D
     
     virtual bool intersect(Ray4 ray_in, float dt_max, Hit4& hit);
     virtual Vector3f normal(Vector3f hit_pos);
-    vector<Ray4> get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit_r);
+    void get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit_r, Hit4& hit);
 };

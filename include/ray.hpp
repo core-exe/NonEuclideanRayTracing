@@ -14,5 +14,4 @@ class Ray4: public Geodesic4{
 
     Vector4f dr_equivalent(float dt);
     float inv_frequency();
-    Vector3f get_spacial_direction();
 };

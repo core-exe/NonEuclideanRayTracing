@@ -7,12 +7,13 @@
 
 Ray4::Ray4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, float _importance){
     r = _r;
-    dr = _dr/_dr[0];
+    dr = -_dr/_dr[0];
     geometry = _geometry;
     attached_vectors = vector<VectorOnTrajectory4>();
     update_local_geometry();
     is_ddr_update = false;
     importance = _importance;
+    tracking_step = 0;
 }
 
 Ray4::Ray4(Vector4f _r, Vector3f spacial_dir, Geometry4* _geometry, float _importance){
@@ -23,6 +24,7 @@ Ray4::Ray4(Vector4f _r, Vector3f spacial_dir, Geometry4* _geometry, float _impor
     attached_vectors = vector<VectorOnTrajectory4>();
     is_ddr_update = false;
     importance = _importance;
+    tracking_step = 0;
 }
 
 Vector4f Ray4::dr_equivalent(float dt){
@@ -32,9 +34,4 @@ Vector4f Ray4::dr_equivalent(float dt){
 
 float Ray4::inv_frequency(){
     return -dot(Vector4f(1, Vector3f()), dr, g);
-}
-
-Vector3f Ray4::get_spacial_direction(){
-    // the in ray will point to the surface, not the propagation direction
-    return dr.yzw().normalized();
 }

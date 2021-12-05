@@ -16,7 +16,7 @@ class PureTexture: public Texture{
     public:
     Vector3f texture_color;
     PureTexture(){}
-    PureTexture(Vector3f _color){}
+    PureTexture(Vector3f _color);
     ~PureTexture(){}
 
     vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);

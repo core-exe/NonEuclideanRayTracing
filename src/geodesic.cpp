@@ -10,6 +10,7 @@ Geodesic4::Geodesic4(Vector4f _r, Vector4f _dr, Geometry4* _geometry) : Trajecto
     attached_vectors = vector<VectorOnTrajectory4>();
     update_local_geometry();
     is_ddr_update = false;
+    tracking_step = 0;
 }
 
 Vector4f Geodesic4::get_ddr(){

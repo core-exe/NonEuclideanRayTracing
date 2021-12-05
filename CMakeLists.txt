@@ -18,6 +18,7 @@ SET(RAY_TRACING_SOURCES
         src/metric.cpp
         src/object.cpp
         src/observer.cpp
+        src/plane.cpp
         src/ray.cpp
         src/scene.cpp
         src/texture.cpp
@@ -36,6 +37,7 @@ SET(RAY_TRACING_INCLUDES
         include/metric.hpp
         include/object.hpp
         include/observer.hpp
+        include/plane.hpp
         include/ray.hpp
         include/scene.hpp
         include/texture.hpp
@@ -48,14 +50,18 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 SET(TEST_SCMETRIC_DG_SOURCES ${RAY_TRACING_SOURCES}
         executable_src/test_scmetric_dg.cpp)
-
 ADD_EXECUTABLE(TEST_SCMETRIC_DG ${TEST_SCMETRIC_DG_SOURCES} ${RAY_TRACING_INCLUDES})
 TARGET_LINK_LIBRARIES(TEST_SCMETRIC_DG vecmath)
 TARGET_INCLUDE_DIRECTORIES(TEST_SCMETRIC_DG PRIVATE include)
 
 SET(TEST_SC_GEOMETRY_SOURCES ${RAY_TRACING_SOURCES}
         executable_src/test_sc_geometry.cpp)
-
 ADD_EXECUTABLE(TEST_SC_GEOMETRY ${TEST_SC_GEOMETRY_SOURCES} ${RAY_TRACING_INCLUDES})
 TARGET_LINK_LIBRARIES(TEST_SC_GEOMETRY vecmath)
 TARGET_INCLUDE_DIRECTORIES(TEST_SC_GEOMETRY PRIVATE include)
+
+SET(TEST_CAMERA_SOURCES ${RAY_TRACING_SOURCES}
+        executable_src/test_camera.cpp)
+ADD_EXECUTABLE(TEST_CAMERA ${TEST_CAMERA_SOURCES} ${RAY_TRACING_INCLUDES})
+TARGET_LINK_LIBRARIES(TEST_CAMERA vecmath)
+TARGET_INCLUDE_DIRECTORIES(TEST_CAMERA PRIVATE include)

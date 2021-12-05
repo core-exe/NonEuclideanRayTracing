@@ -1,4 +1,5 @@
 # include <vecmath.h>
+# include <iostream>
 # include "observer.hpp"
 # include "trajectory.hpp"
 # include "utils.hpp"
@@ -44,11 +45,9 @@ Observer4::Observer4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, vector<Vec
     update_local_geometry();
     prograde = Prograde(this);
     for(int i=0; i<2; i++){
-        normals[i] = Normal(this, space_direction[i]);
+        normals.push_back(Normal(this, space_direction[i]));
     }
 }
-
-
 
 void Observer4::correction(){
     prograde.align();
@@ -87,9 +86,6 @@ GyroscopeObserver4::GyroscopeObserver4(Vector4f _r, Vector4f _dr, Geometry4* _ge
     normals = vector<Normal>();
     update_local_geometry();
     prograde = Prograde(this);
-    for(int i=0; i<2; i++){
-        normals[i] = Normal(this, space_direction[i]);
-    }
 }
 
 void GyroscopeObserver4::update_frame(float dt){
@@ -103,12 +99,9 @@ void GyroscopeObserver4::update_frame(float dt){
 }
 
 HorizontalObserver4::HorizontalObserver4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, vector<Vector4f> space_direction):Observer4(_r, _dr, _geometry, space_direction){
-    normals = vector<Normal>();
+    normals = vector<Normal>(3);
     update_local_geometry();
     prograde = Prograde(this);
-    for(int i=0; i<2; i++){
-        normals[i] = Normal(this, space_direction[i]);
-    }
 }
 
 void HorizontalObserver4::correction(){
@@ -117,12 +110,12 @@ void HorizontalObserver4::correction(){
     Vector3f front = dr.yzw();
     front = (front - Vector3f::dot(up, front) * up).normalized();
     Vector3f right = Vector3f::cross(front, up).normalized();
-    Vector4f e0 = prograde.v, e1 = Vector4f(0, front), e2 = Vector4f(0, up), e3 = Vector4f(0, right);
+    Vector4f e0 = prograde.v, e1 = Vector4f(0, front), e2 = Vector4f(0, up), e3 = Vector4f(0, right);    
     e2 = e2 + e0*dot(e0, e2, g);
     e2 = e2 / sqrt(dot(e2, e2, g));
-    e1 = e1 + e0*dot(e0, e1, g) - e1*dot(e1, e1, g);
+    e1 = e1 + e0*dot(e0, e1, g) - e2*dot(e2, e1, g);
     e1 = e1 / sqrt(dot(e1, e1, g));
-    e3 = e3 + e0*dot(e0, e3, g) - e1*dot(e1, e3, g) - e2*dot(e2, e3, g);
+    e3 = e3 + e0*dot(e0, e3, g) - e2*dot(e2, e3, g) - e1*dot(e1, e3, g);
     e3 = e3 / sqrt(dot(e3, e3, g));
     prograde.v = e0;
     normals[0].v = e1;

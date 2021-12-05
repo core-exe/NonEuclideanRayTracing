@@ -9,6 +9,7 @@ class Camera4{
     int height, width;
     float f;
     Observer4* observer;
-    Camera4(int _height, int _width, float _fov, Observer4* _observer);
+    Matrix3f perspective;
+    Camera4(int _height, int _width, float _fov, Observer4* _observer, Matrix3f _perspective);
     Ray4 get_ray(float w, float h);
 };

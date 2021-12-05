@@ -1,5 +1,6 @@
 # include <vecmath.h>
 # include <vector>
+# include <iostream>
 # include "scene.hpp"
 # include "group.hpp"
 # include "geometry.hpp"
@@ -9,6 +10,7 @@
 # include "texture.hpp"
 # include "image.hpp"
 # include "observer.hpp"
+# include "Openmp/ompt.h"
 using namespace std;
 
 Scene4::Scene4(Geometry4* _geometry, Group* _group, Camera4* _camera){
@@ -31,14 +33,15 @@ Vector3f Scene4::get_color(Ray4 ray){
             break;
         ray.step(dt_max);
     }
-    vector<Vector3f> colors;
+    vector<Vector3f> colors = vector<Vector3f>();
     for(int i=0; i<hit.ray_out.size(); i++){
         if(hit.ray_out[i].importance > eps)
             colors.push_back(get_color(hit.ray_out[i]));
         else
             colors.push_back(Vector3f());
     }
-    return hit.hit_texture->color(hit.hit_pos_texture, hit.in_cosine, hit.out_cosine, colors);
+    Vector3f color = hit.hit_texture->color(hit.hit_pos_texture, hit.in_cosine, hit.out_cosine, colors);
+    return color;
 }
 
 double Scene4::move_camera(float delta_t){
@@ -65,11 +68,12 @@ Image Scene4::shot(){
     Image img = Image(camera->width, camera->height);
     for(int x=0; x<camera->width; x++){
         for(int y=0; y<camera->height; y++){
+            printf("rendering x = %4d, y = %4d\n", x, y);
             Vector3f color_avg = Vector3f();
             for(int dx = 0; dx<sample; dx++){
                 for(int dy = 0; dy<sample; dy++){
-                    float w = x-(.5+.5/sample)+(float) dx/sample;
-                    float h = y-(.5+.5/sample)+(float) dy/sample;
+                    float w = x-(1-.5/sample)+(float) dx/sample;
+                    float h = y-(1-.5/sample)+(float) dy/sample;
                     Ray4 ray = camera->get_ray(w, h);
                     Vector3f color = get_color(ray);
                     color_avg = color_avg + color / (sample * sample);

@@ -1,5 +1,6 @@
 # include <vecmath.h>
 # include <vector>
+# include <iostream>
 # include "group.hpp"
 # include "hit.hpp"
 # include "ray.hpp"
