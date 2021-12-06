@@ -9,7 +9,7 @@ fi
 mkdir -p build
 cd build
 cmake ..
-make -j
+make -j CC='usr/bin/gcc-9'
 cd ..
 
 # Run all testcases. 

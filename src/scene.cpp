@@ -1,6 +1,7 @@
 # include <vecmath.h>
 # include <vector>
 # include <iostream>
+# include <omp.h>
 # include "scene.hpp"
 # include "group.hpp"
 # include "geometry.hpp"
@@ -10,7 +11,6 @@
 # include "texture.hpp"
 # include "image.hpp"
 # include "observer.hpp"
-# include "Openmp/ompt.h"
 using namespace std;
 
 Scene4::Scene4(Geometry4* _geometry, Group* _group, Camera4* _camera){
@@ -67,8 +67,9 @@ double Scene4::move_camera(float delta_t){
 Image Scene4::shot(){
     Image img = Image(camera->width, camera->height);
     for(int x=0; x<camera->width; x++){
+        printf("rendering x = %4d / %4d\n", x, camera->width);
+        # pragma omp parallel for shared(img, x) num_threads(32)
         for(int y=0; y<camera->height; y++){
-            printf("rendering x = %4d, y = %4d\n", x, y);
             Vector3f color_avg = Vector3f();
             for(int dx = 0; dx<sample; dx++){
                 for(int dy = 0; dy<sample; dy++){

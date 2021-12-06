@@ -11,6 +11,7 @@ class Group: public Object3{
     public:
     vector<Object3*> list;
     Group();
+    Group(Geometry4* geometry);
     ~Group(){}
 
     int length();

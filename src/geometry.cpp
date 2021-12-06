@@ -47,11 +47,19 @@ float SchwartzchildGeometry::get_dt(Trajectory4* trajectory) {
 bool SchwartzchildGeometry::is_terminal(Ray4 ray, Hit4& hit){
     float r = ray.r.yzw().length();
     float v = ray.dr.yzw().length();
-    if(abs(v/ray.dr[0])<stop_eps)
-        hit.hit_texture = new PureTexture(Vector3f(1.,0.,0.));
-    else
-        hit.hit_texture = new PureTexture();
-    return v<stop_eps || r>r_max || ray.tracking_step>=ray.max_tracking_step;
+    if(abs(v/ray.dr[0])<stop_eps){
+        hit.hit_texture = new PureTexture(Vector3f(0.,0.,0.));
+        return true;
+    }
+    else if(ray.tracking_step>=ray.max_tracking_step){
+        hit.hit_texture = new PureTexture(Vector3f(0.,0.,0.));
+        return true;
+    }
+    else if(r>r_max){
+        hit.hit_texture = new PureTexture(Vector3f(0.05,0.05,0.05));
+        return true;
+    }
+    return false;
 }
 
 bool SchwartzchildGeometry::is_terminal(Observer4* observer4){
