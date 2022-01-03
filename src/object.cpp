@@ -27,18 +27,26 @@ Vector3f Object3::normal(Vector3f hit_pos){
 }
 
 void Object3::get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit_r, Hit4 &hit){
-    Vector3f n = normal(hit_pos);
+    Vector4f et = Vector4f(1, Vector3f());
+    Vector4f n = Vector4f(0, normal(hit_pos)), in_direction_4d = Vector4f(0, in_direction);
     Matrix4f g = geometry->g->val(hit_r);
+
+    et = et / sqrt(-g(0,0));
+    n = n + dot(n, et, g) * et;
     n = n / sqrt(dot(n, n, g));
-    in_direction = in_direction / sqrt(dot(in_direction, in_direction, g));
-    float in_cos = dot(n, in_direction, g); // negative.
-    Vector3f tangent = (in_direction - in_cos * n);
+    in_direction_4d = in_direction_4d + dot(in_direction_4d, et, g) * et;
+    in_direction_4d = in_direction_4d / sqrt(dot(in_direction_4d, in_direction_4d, g));
+
+
+    float in_cos = dot(n, in_direction_4d, g); // negative, toward the surface
+    Vector4f tangent = (in_direction_4d - in_cos * n);
     tangent = tangent / sqrt(dot(tangent, tangent, g));
     vector<Vector2f> out_cos = texture->get_out_cosine(hit_pos, in_cos);
     vector<Ray4> out_ray = vector<Ray4>();
     for(int i=0; i<out_cos.size(); i++){
-        Vector3f space_direction = n*out_cos[i][1] + tangent*sqrt(1-pow(out_cos[i][1], 2));
+        Vector3f space_direction = (n*out_cos[i][1] + tangent*sqrt(1-pow(out_cos[i][1], 2))).yzw();
         out_ray.push_back(Ray4(hit_r, space_direction, geometry, out_cos[i][0]));
+        hit.out_importance.push_back(out_cos[i][0]);
         hit.out_cosine.push_back(out_cos[i][1]);
     }
     hit.ray_out = out_ray;

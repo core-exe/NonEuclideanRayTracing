@@ -16,8 +16,8 @@ using namespace std;
 int main(){
     Geometry4* geometry = new SchwartzchildGeometry(1);
     Group* group = new Group(geometry);
-    Plane* plane1 = new Plane(Vector3f(0,-3,0), Vector3f(0,0,1), Vector3f(1,0,0), new PureGrid(
-        Vector3f(0.2), Vector3f(0.4), 2.0, 0.4
+    Plane* plane1 = new Plane(Vector3f(0,-3,0), Vector3f(0,0,1), Vector3f(1,0,0), new Surface(
+        1.0, 1.0, 0.5, 0.5, Vector3f(1.0,0.0,0.0), Vector3f(0.0), Vector3f(1)
     ));
     /*
     Plane* plane2 = new Plane(Vector3f(0,0,-3), Vector3f(1,0,0), Vector3f(0,1,0), new PureTexture(Vector3f(0, 0, 0.5)));
@@ -33,9 +33,9 @@ int main(){
     printf("space_direction_up: (%.3f, %.3f, %.3f, %.3f)\n", observer->normals[1].v[0], observer->normals[1].v[1], observer->normals[1].v[2], observer->normals[1].v[3]);
     printf("space_direction_right: (%.3f, %.3f, %.3f, %.3f)\n", observer->normals[2].v[0], observer->normals[2].v[1], observer->normals[2].v[2], observer->normals[2].v[3]);
 
-    Camera4* camera = new Camera4(600, 800, 1.6, observer, perspective);
+    Camera4* camera = new Camera4(300, 400, 1.6, observer, perspective);
     Scene4 scene(geometry, group, camera);
-    scene.sample = 2;
+    scene.sample = 1;
 
     Image img = scene.shot();
     img.SaveBMP("output/out.png");

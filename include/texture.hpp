@@ -9,7 +9,7 @@ class Texture {
     ~Texture(){}
 
     virtual vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);
-    virtual Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> get_out_cosine, vector<Vector3f> out_color);
+    virtual Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);
 };
 
 class PureTexture: public Texture{
@@ -20,7 +20,7 @@ class PureTexture: public Texture{
     ~PureTexture(){}
 
     vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);
-    Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> get_out_cosine, vector<Vector3f> out_color);
+    Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);
 };
 
 class PureGrid: public Texture{
@@ -31,5 +31,17 @@ class PureGrid: public Texture{
     ~PureGrid();
 
     vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);
-    Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> get_out_cosine, vector<Vector3f> out_color);
+    Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);
+};
+
+class Surface: public Texture{
+    public:
+    float n1, n2, r, l;
+    Vector3f r_color, t_color, l_color;
+    Surface(){}
+    Surface(float _n1, float _n2, float _r, float _l, Vector3f _r_color, Vector3f _t_color, Vector3f _l_color);
+    ~Surface(){}
+
+    vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);
+    Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);
 };

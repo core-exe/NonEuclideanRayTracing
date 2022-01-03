@@ -24,7 +24,7 @@ float Scene4::get_dt_geometry(Trajectory4* trajectory) {
     return t_geometry;
 }
 
-Vector3f Scene4::get_color(Ray4 ray){
+Vector3f Scene4::get_color(Ray4 ray, bool direct = false){
     Hit4 hit;
     while(!geometry->is_terminal(ray, hit))
     {
@@ -40,7 +40,7 @@ Vector3f Scene4::get_color(Ray4 ray){
         else
             colors.push_back(Vector3f());
     }
-    Vector3f color = hit.hit_texture->color(hit.hit_pos_texture, hit.in_cosine, hit.out_cosine, colors);
+    Vector3f color = hit.hit_texture->color(hit.hit_pos_texture, hit.in_cosine, hit.out_importance, colors);
     return color;
 }
 
@@ -76,7 +76,7 @@ Image Scene4::shot(){
                     float w = x-(1-.5/sample)+(float) dx/sample;
                     float h = y-(1-.5/sample)+(float) dy/sample;
                     Ray4 ray = camera->get_ray(w, h);
-                    Vector3f color = get_color(ray);
+                    Vector3f color = get_color(ray, true);
                     color_avg = color_avg + color / (sample * sample);
                 }
             }

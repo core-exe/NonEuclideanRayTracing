@@ -23,7 +23,7 @@ class Scene4 {
     ~Scene4(){}
 
     float get_dt_geometry(Trajectory4* trajectory);
-    Vector3f get_color(Ray4 ray);
+    Vector3f get_color(Ray4 ray, bool direct);
     double move_camera(float delta_t);
     Image shot();
 };
