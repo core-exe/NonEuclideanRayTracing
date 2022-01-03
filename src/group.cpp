@@ -31,7 +31,7 @@ bool Group::intersect(Ray4 ray_in, float dt_max, Hit4& hit){
     bool ret = false;
     for(int i=0; i<length(); i++){
         Hit4 hit_empty = Hit4();
-        if(list[i]->intersect(ray_in, dt_max, hit_empty) && hit_empty.t<dt_min){
+        if(list[i]->intersect(ray_in, dt_max, hit_empty) && hit_empty.t<dt_min && hit_empty.t > hit.t){
             dt_min = hit_empty.t;
             hit = hit_empty;
             ret = true;

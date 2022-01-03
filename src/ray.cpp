@@ -20,7 +20,7 @@ Ray4::Ray4(Vector4f _r, Vector3f spacial_dir, Geometry4* _geometry, float _impor
     r = _r;
     geometry = _geometry;
     update_local_geometry();
-    dr = get_negative_null_vector(spacial_dir, g);
+    dr = get_negative_null_vector(-spacial_dir, g);
     attached_vectors = vector<VectorOnTrajectory4>();
     is_ddr_update = false;
     importance = _importance;

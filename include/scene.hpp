@@ -17,6 +17,7 @@ class Scene4 {
     float eps = 0.0001;
     double total_time = 0.0;
     int sample = 1;
+    float intersect_dt_ratio = 1.2;
 
     Scene4(){}
     Scene4(Geometry4* _geometry, Group* _group, Camera4* _camera);
@@ -24,6 +25,7 @@ class Scene4 {
 
     float get_dt_geometry(Trajectory4* trajectory);
     Vector3f get_color(Ray4 ray, bool direct);
+    Vector3f get_color(float x, float y);
     double move_camera(float delta_t);
     Image shot();
 };

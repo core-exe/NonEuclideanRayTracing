@@ -1,6 +1,7 @@
 # pragma once
 # include <vecmath.h>
 # include <vector>
+# include <string>
 using namespace std;
 
 class Hit4;
@@ -12,8 +13,11 @@ class Object3{// a static object in 4D
     public:
     Texture* texture;
     Geometry4* geometry;
+    string name;
 
-    Object3(){}
+    Object3(){
+        name = string("None");
+    }
     Object3(Texture* _texture, Geometry4* _geometry);
     ~Object3(){}
     
