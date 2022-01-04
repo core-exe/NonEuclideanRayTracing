@@ -16,7 +16,7 @@ Geometry4::Geometry4(Metric4* _g) {
 }
 
 float Geometry4::get_dt(Trajectory4* trajectory) {
-    return 1.0;
+    return 1e5;
 }
 
 bool Geometry4::is_terminal(Ray4 ray, Hit4& hit){
@@ -24,6 +24,21 @@ bool Geometry4::is_terminal(Ray4 ray, Hit4& hit){
 }
 
 bool Geometry4::is_terminal(Observer4* ray){
+    return false;
+}
+
+FlatGeometry::FlatGeometry(float _max_r){
+    g = new Metric4();
+    gamma = new Christoffel4(g);
+    max_r = _max_r;
+}
+
+bool FlatGeometry::is_terminal(Ray4 ray, Hit4& hit) {
+    float r = ray.r.yzw().length();
+    if(r > max_r){
+        hit.hit_texture = new PureTexture(Vector3f(0.,0.,0.));
+        return true;
+    }
     return false;
 }
 

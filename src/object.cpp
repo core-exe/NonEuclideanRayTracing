@@ -23,14 +23,9 @@ bool Object3::intersect(Ray4 ray_in, float dt_max, Hit4& hit){
     return false;
 }
 
-Vector3f Object3::normal(Vector3f hit_pos){
-    return Vector3f();
-}
-
 void Object3::get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit_r, Hit4 &hit){
-    //cout << "get_out_rays" << endl;
     Vector4f et = Vector4f(1, Vector3f());
-    Vector4f n = Vector4f(0, normal(hit_pos)), in_direction_4d = Vector4f(0, in_direction);
+    Vector4f n = Vector4f(0, hit.normal), in_direction_4d = Vector4f(0, in_direction);
     Matrix4f g = geometry->g->val(hit_r);
 
 
@@ -40,6 +35,7 @@ void Object3::get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit
     in_direction_4d = in_direction_4d + dot(in_direction_4d, et, g) * et;
     in_direction_4d = in_direction_4d / sqrt(dot(in_direction_4d, in_direction_4d, g));
 
+    //printf("hit importance: %.4f", hit.importance);
     //printf("in direction: %.4f, %.4f, %.4f. %.4f\n", in_direction_4d[0], in_direction_4d[1], in_direction_4d[2], in_direction_4d[3]);
     //printf("normal: %.4f, %.4f, %.4f. %.4f\n", n[0], n[1], n[2], n[3]);
 

@@ -1,7 +1,12 @@
 # include "metric.hpp"
 
 Matrix4f Metric4::val(Vector4f r){
-    return Matrix4f::identity();
+    return Matrix4f(
+        -1, 0, 0, 0,
+         0, 1, 0, 0,
+         0, 0, 1, 0,
+         0, 0, 0, 1
+    );
 }
 
 Matrix4f Metric4::inv(Vector4f r){

@@ -22,6 +22,16 @@ class Geometry4 {
     virtual bool is_terminal(Observer4* observer);
 };
 
+class FlatGeometry: public Geometry4 {
+    public:
+    float max_r;
+    
+    FlatGeometry(float _max_r = 1e4);
+    ~FlatGeometry();
+
+    bool is_terminal(Ray4 ray, Hit4& hit);
+};
+
 class SchwartzchildGeometry: public Geometry4{
     public:
     float radius;

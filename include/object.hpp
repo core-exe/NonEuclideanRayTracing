@@ -14,6 +14,7 @@ class Object3{// a static object in 4D
     Texture* texture;
     Geometry4* geometry;
     string name;
+    float minimal_dt = 1e-5;
 
     Object3(){
         name = string("None");
@@ -22,6 +23,5 @@ class Object3{// a static object in 4D
     ~Object3(){}
     
     virtual bool intersect(Ray4 ray_in, float dt_max, Hit4& hit);
-    virtual Vector3f normal(Vector3f hit_pos);
     void get_out_rays(Vector3f in_direction, Vector3f hit_pos, Vector4f hit_r, Hit4& hit);
 };

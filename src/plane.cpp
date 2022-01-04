@@ -25,16 +25,11 @@ Plane::Plane(Vector3f _o, Vector3f _v1, Vector3f _v2, Texture* _texture, functio
     texture = _texture;
 }
 
-Vector3f Plane::normal(Vector3f hit_pos){
-    return n;
-}
-
 bool Plane::intersect(Ray4 ray_in, float dt_max, Hit4& hit){
-    hit.importance = ray_in.importance;
     Vector3f dr_equiv = ray_in.dr_equivalent(dt_max).yzw();
     Vector3f r_spacial = ray_in.r.yzw();
     float t = Vector3f::dot(o-r_spacial, n) / Vector3f::dot(dr_equiv, n);
-    if(t<=hit.t || t>dt_max)
+    if(t<=minimal_dt || t<=hit.t || t>dt_max)
         return false;
     Vector4f hit_r = ray_in.r + ray_in.dr*t;
     Vector3f hit_pos = Vector3f();
@@ -42,8 +37,9 @@ bool Plane::intersect(Ray4 ray_in, float dt_max, Hit4& hit){
     hit_pos[1] = Vector3f::dot(hit_r.yzw(), v2);
     if(pass(hit_pos))
         return false;
-    get_out_rays(dr_equiv, hit_pos, hit_r, hit);
+    hit.normal = n;
     hit.t = t;
+    get_out_rays(dr_equiv, hit_pos, hit_r, hit);
     //cout << "intersecting with " << name << endl;
     return true;
 }

@@ -10,7 +10,7 @@ class Hit4 {
     public:
     float t;
     vector<Ray4> ray_out; 
-    Vector3f hit_pos_texture;
+    Vector3f hit_pos_texture, normal;
     float in_cosine;
     float importance;
     vector<float> out_cosine, out_importance;

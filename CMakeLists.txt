@@ -10,6 +10,7 @@ find_package(OpenMP REQUIRED)
 ADD_SUBDIRECTORY(deps/vecmath)
 
 SET(RAY_TRACING_SOURCES
+        src/ball.cpp
         src/camera.cpp
         src/christoffel.cpp
         src/geodesic.cpp
@@ -29,6 +30,7 @@ SET(RAY_TRACING_SOURCES
         )
 
 SET(RAY_TRACING_INCLUDES
+        include/ball.hpp
         include/camera.hpp
         include/christoffel.hpp
         include/geodesic.hpp
@@ -73,3 +75,9 @@ SET(DEMO1_SOURCES ${RAY_TRACING_SOURCES}
 ADD_EXECUTABLE(DEMO1 ${DEMO1_SOURCES} ${RAY_TRACING_INCLUDES})
 TARGET_LINK_LIBRARIES(DEMO1 vecmath OpenMP::OpenMP_CXX)
 TARGET_INCLUDE_DIRECTORIES(DEMO1 PRIVATE include)
+
+SET(DEMO2_SOURCES ${RAY_TRACING_SOURCES}
+        executable_src/demo2.cpp)
+ADD_EXECUTABLE(DEMO2 ${DEMO2_SOURCES} ${RAY_TRACING_INCLUDES})
+TARGET_LINK_LIBRARIES(DEMO2 vecmath OpenMP::OpenMP_CXX)
+TARGET_INCLUDE_DIRECTORIES(DEMO2 PRIVATE include)

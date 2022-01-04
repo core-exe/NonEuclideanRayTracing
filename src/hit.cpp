@@ -6,7 +6,7 @@
 using namespace std;
 
 Hit4::Hit4(){
-    t=1e-5;
+    t=0;
     out_importance = vector<float>();
     out_cosine = vector<float>();
 }

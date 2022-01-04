@@ -16,5 +16,4 @@ class Plane: public Object3{
     ~Plane();
 
     bool intersect(Ray4 ray_in, float dt_max, Hit4& hit);
-    Vector3f normal(Vector3f hit_pos);
 };

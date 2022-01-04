@@ -125,7 +125,7 @@ vector<Vector2f> Surface::get_out_cosine(Vector3f in_pos, float in_cosine){
     float n1 = n1_map(in_pos), n2 = n2_map(in_pos), r = r_map(in_pos), l = l_map(in_pos);
     bool inside = (in_cosine > 0);
     float in_sine = sqrt(1 - pow(in_cosine, 2));
-    float out_sine = (inside ? (in_sine / n2 * n1) : (in_sine / n1 * n2));
+    float out_sine = (inside ? (in_sine / n1 * n2) : (in_sine / n2 * n1));
     bool full_refl = (out_sine >= 1);
     float r_eff, t_eff;
     vector<Vector2f> out_cosine = vector<Vector2f>();
@@ -134,17 +134,26 @@ vector<Vector2f> Surface::get_out_cosine(Vector3f in_pos, float in_cosine){
         out_cosine.push_back(Vector2f(0, -in_cosine));
     } else {
         float in_angle = asin(in_sine), out_angle = asin(out_sine);
+        //cout << endl;
+        //cout << (inside ? "inside" : "outside") << endl;
+        //cout << "in_angle " << in_angle << " out_angle " << out_angle << endl;
         float rs = - sin(in_angle - out_angle) / sin(in_angle + out_angle);
-        float ts = rs + 1;
+        float ts = 1 - abs(rs);
         float rp = tan(in_angle - out_angle) / tan(in_angle + out_angle);
-        float tp = rp + 1;
+        float tp = 1 - abs(rp);
         float out_cosine_t = sqrt(1-pow(out_sine, 2)) * (inside ? 1 : -1);
-        tp *= (inside ? (n2/n1) : (n1/n2));
-        r_eff = r + (1-r-l) * sqrt((pow(rs,2)+pow(rp,2))/2);
-        t_eff = (1-r-l) * sqrt((pow(ts,2)+pow(tp,2))/2) * abs(out_cosine_t / in_cosine);
-        t_eff *= (inside ? (n1/n2) : (n2/n1));
+        //tp *= (inside ? (n2/n1) : (n1/n2));
+        r_eff = sqrt((pow(rs,2)+pow(rp,2))/2);
+        t_eff = sqrt((pow(ts,2)+pow(tp,2))/2) * abs(out_cosine_t / in_cosine);
+        float total = r_eff + t_eff;
+        r_eff = r_eff / total * (1-l-r) + r;
+        t_eff = t_eff / total * (1-l-r);
         out_cosine.push_back(Vector2f(r_eff, -in_cosine));
         out_cosine.push_back(Vector2f(t_eff, out_cosine_t));
+        //cout << "r_s " << rs << " t_s " << ts << endl;
+        //cout << "r_p " << rp << " t_p " << tp << endl;
+        //cout << "in_cosine " << in_cosine << endl;
+        //cout << "r_eff " << r_eff << " t_eff " << t_eff << endl;
     }
     return out_cosine;
 }
