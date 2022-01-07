@@ -1,6 +1,7 @@
 # pragma once
 # include <vecmath.h>
 # include <vector>
+# include <functional>
 using namespace std;
 
 class Geometry4;
@@ -26,7 +27,7 @@ class Trajectory4{
     Geometry4* geometry;
     vector<VectorOnTrajectory4> attached_vectors;
     Matrix4f g;
-    float dg[4][4][4], gamma[4][4][4];
+    float t, dg[4][4][4], gamma[4][4][4];
 
     Trajectory4(){}
     Trajectory4(Vector4f _r, Vector4f _dr, Geometry4* _geometry);
@@ -40,3 +41,24 @@ class Trajectory4{
     virtual void step(float dt);
 };
 
+class DifferentialTrajectory: public Trajectory4{
+    public:
+    function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> motion_equation; // (r,v,g,Gamma) -> a
+    Vector4f ddr;
+    bool is_ddr_update;
+
+    DifferentialTrajectory(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation);
+    Vector4f get_ddr();
+    void update_coor(float dt);
+    virtual void step(float dt);
+};
+
+class ParametricTrajectory: public Trajectory4{
+    public:
+    function<Vector4f(float)> r_func, dr_func, ddr_func; // keeping it consistent is the user's responsibility.
+
+    ParametricTrajectory(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func);
+    Vector4f get_ddr();
+    void update_coor(float dt);
+    virtual void step(float dt);
+};
