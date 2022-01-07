@@ -13,7 +13,7 @@ SET(RAY_TRACING_SOURCES
         src/ball.cpp
         src/camera.cpp
         src/christoffel.cpp
-        src/geodesic.cpp
+        src/ray.cpp
         src/geometry.cpp
         src/group.cpp
         src/hit.cpp
@@ -22,7 +22,6 @@ SET(RAY_TRACING_SOURCES
         src/object.cpp
         src/observer.cpp
         src/plane.cpp
-        src/ray.cpp
         src/scene.cpp
         src/texture.cpp
         src/trajectory.cpp
@@ -33,7 +32,7 @@ SET(RAY_TRACING_INCLUDES
         include/ball.hpp
         include/camera.hpp
         include/christoffel.hpp
-        include/geodesic.hpp
+        include/ray.hpp
         include/geometry.hpp
         include/group.hpp
         include/hit.hpp
@@ -42,7 +41,6 @@ SET(RAY_TRACING_INCLUDES
         include/object.hpp
         include/observer.hpp
         include/plane.hpp
-        include/ray.hpp
         include/scene.hpp
         include/texture.hpp
         include/trajectory.hpp
@@ -81,3 +79,9 @@ SET(DEMO2_SOURCES ${RAY_TRACING_SOURCES}
 ADD_EXECUTABLE(DEMO2 ${DEMO2_SOURCES} ${RAY_TRACING_INCLUDES})
 TARGET_LINK_LIBRARIES(DEMO2 vecmath OpenMP::OpenMP_CXX)
 TARGET_INCLUDE_DIRECTORIES(DEMO2 PRIVATE include)
+
+SET(DEMO3_SOURCES ${RAY_TRACING_SOURCES}
+        executable_src/demo3.cpp)
+ADD_EXECUTABLE(DEMO3 ${DEMO3_SOURCES} ${RAY_TRACING_INCLUDES})
+TARGET_LINK_LIBRARIES(DEMO3 vecmath OpenMP::OpenMP_CXX)
+TARGET_INCLUDE_DIRECTORIES(DEMO3 PRIVATE include)

@@ -7,7 +7,6 @@
 # include "group.hpp"
 # include "texture.hpp"
 # include "image.hpp"
-# include "ray.hpp"
 # include <vector>
 # include <iostream>
 
