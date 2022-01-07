@@ -35,18 +35,6 @@ class PureGrid: public Texture{
     Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);
 };
 
-class PureSurface: public Texture{
-    public:
-    float n1, n2, r, l;
-    Vector3f r_color, t_color, l_color;
-    PureSurface(){}
-    PureSurface(float _n1, float _n2, float _r, float _l, Vector3f _r_color, Vector3f _t_color, Vector3f _l_color);
-    ~PureSurface(){}
-
-    vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);
-    Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);
-};
-
 class Surface: public Texture{
     public:
     function<float(Vector3f)> n1_map, n2_map, r_map, l_map;

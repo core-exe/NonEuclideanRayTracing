@@ -53,13 +53,13 @@ int main(){
     
 
     Ball* ball2 = new Ball(
-        3, Vector3f(0, 8, 0), new PureSurface(1.0, 1.0, 0.9, 0.1, Vector3f(0.6, 1.0, 0.6), Vector3f(), Vector3f(0, 0.5, 0))
+        3, Vector3f(0, 8, 0), new Surface(1.0, 1.0, 0.9, 0.1, Vector3f(0.6, 1.0, 0.6), Vector3f(), Vector3f(0, 0.5, 0))
     );
     ball1->name = "Ball2";
     group->add_object(ball2);
     
     Ball* ball3 = new Ball(
-        3, Vector3f(0, 0, 8), new PureSurface(1.0, 1.0, 0.5, 0.5, Vector3f(1.0), Vector3f(0), Vector3f(0, 0, 0.8))
+        3, Vector3f(0, 0, 8), new Surface(1.0, 1.0, 0.5, 0.5, Vector3f(1.0), Vector3f(0), Vector3f(0, 0, 0.8))
     );
     ball1->name = "Ball3";
     group->add_object(ball3);
@@ -93,7 +93,7 @@ int main(){
 
     Camera4* camera = new Camera4(720, 1080, 0.7, observer, perspective);
     Scene4 scene(geometry, group, camera);
-    scene.sample = 3;
+    scene.sample = 2;
     scene.max_depth = 4;
 
     //Vector3f color = scene.get_color(21, 28, true);

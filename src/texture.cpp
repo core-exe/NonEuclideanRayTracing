@@ -49,50 +49,6 @@ Vector3f PureGrid::color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_
         return cell_color;
 }
 
-PureSurface::PureSurface(float _n1, float _n2, float _r, float _l, Vector3f _r_color, Vector3f _t_color, Vector3f _l_color){
-    // r are intensity reserved for refraction
-    // l are intensity reserved for self-illumination
-    // the remaining part are decided by Fresnel equations
-    n1 = _n1;
-    n2 = _n2;
-    r = _r;
-    l = _l;
-    r_color = _r_color;
-    t_color = _t_color;
-    l_color = _l_color;
-}
-
-vector<Vector2f> PureSurface::get_out_cosine(Vector3f in_pos, float in_cosine){
-    bool inside = (in_cosine > 0);
-    float in_sine = sqrt(1 - pow(in_cosine, 2));
-    float out_sine = (inside ? (in_sine / n2 * n1) : (in_sine / n1 * n2));
-    bool full_refl = (out_sine >= 1);
-    float r_eff, t_eff;
-    vector<Vector2f> out_cosine = vector<Vector2f>();
-    if (full_refl) {
-        out_cosine.push_back(Vector2f(1-l, -in_cosine));
-    } else {
-        float in_angle = asin(in_sine), out_angle = asin(out_sine);
-        float rs = - sin(in_angle - out_angle) / sin(in_angle + out_angle);
-        float ts = rs + 1;
-        float rp = tan(in_angle - out_angle) / tan(in_angle + out_angle);
-        float tp = rp + 1;
-        float out_cosine_t = sqrt(1-pow(out_sine, 2)) * (inside ? 1 : -1);
-        tp *= (inside ? (n2/n1) : (n1/n2));
-        r_eff = r + (1-r-l) * sqrt((pow(rs,2)+pow(rp,2))/2);
-        t_eff = (1-r-l) * sqrt((pow(ts,2)+pow(tp,2))/2) * abs(out_cosine_t / in_cosine);
-        t_eff *= (inside ? (n1/n2) : (n2/n1));
-        out_cosine.push_back(Vector2f(r_eff, -in_cosine));
-        out_cosine.push_back(Vector2f(t_eff, out_cosine_t));
-    }
-    return out_cosine;
-}
-
-Vector3f PureSurface::color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color) {
-    float r_eff = out_importance[0], t_eff = out_importance[1];
-    return (1-r_eff-t_eff)*l_color + r_eff*out_color[0]*r_color + t_eff*out_color[1]*t_color;
-}
-
 Surface::Surface(float _n1, float _n2, float _r, float _l, Vector3f _r_color, Vector3f _t_color, Vector3f _l_color) {
     n1_map = [_n1](Vector3f pos)->float{return _n1;};
     n2_map = [_n2](Vector3f pos)->float{return _n2;};
