@@ -83,7 +83,6 @@ float Observer4::get_proper_time(float dt){
 }
 
 GyroscopeObserver4::GyroscopeObserver4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, vector<Vector4f> space_direction):Observer4(_r, _dr, _geometry, space_direction){
-    normals = vector<Normal>();
     update_local_geometry();
     prograde = Prograde(this);
 }
@@ -121,4 +120,80 @@ void HorizontalObserver4::correction(){
     normals[0].v = e1;
     normals[1].v = e2;
     normals[2].v = e3;
+}
+
+GyroDifferential::GyroDifferential(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation, vector<Vector4f> space_direction) {
+    t = 0;
+    r = _r;
+    dr = _dr;
+    geometry = _geometry;
+    motion_equation = _motion_equation;
+    is_ddr_update = false;
+    attached_vectors = vector<VectorOnTrajectory4>();
+    normals = vector<Normal>();
+    update_local_geometry();
+    prograde = Prograde(this);
+    for(int i=0; i<2; i++){
+        normals.push_back(Normal(this, space_direction[i]));
+    }
+}
+
+void GyroDifferential::step(float dt){
+    Observer4::step(dt);
+}
+
+HorizontalDifferential::HorizontalDifferential(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation, vector<Vector4f> space_direction) {
+    t = 0;
+    r = _r;
+    dr = _dr;
+    geometry = _geometry;
+    motion_equation = _motion_equation;
+    is_ddr_update = false;
+    attached_vectors = vector<VectorOnTrajectory4>();
+    normals = vector<Normal>(3);
+    update_local_geometry();
+    prograde = Prograde(this);
+}
+
+void HorizontalDifferential::step(float dt){
+    Observer4::step(dt);
+}
+
+GyroParametric::GyroParametric(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func, vector<Vector4f> space_direction) {
+    geometry = _geometry;
+    r_func = _r_func;
+    dr_func = _dr_func;
+    ddr_func = _ddr_func;
+    t = 0;
+    r = r_func(0);
+    dr = dr_func(0);
+    attached_vectors = vector<VectorOnTrajectory4>();
+    normals = vector<Normal>();
+    update_local_geometry();
+    prograde = Prograde(this);
+    for(int i=0; i<2; i++){
+        normals.push_back(Normal(this, space_direction[i]));
+    }
+}
+
+void GyroParametric::step(float dt) {
+    Observer4::step(dt);
+}
+
+HorizontalParametric::HorizontalParametric(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func, vector<Vector4f> space_direction) {
+    geometry = _geometry;
+    r_func = _r_func;
+    dr_func = _dr_func;
+    ddr_func = _ddr_func;
+    t = 0;
+    r = r_func(0);
+    dr = dr_func(0);
+    attached_vectors = vector<VectorOnTrajectory4>();
+    normals = vector<Normal>(3);
+    update_local_geometry();
+    prograde = Prograde(this);
+}
+
+void HorizontalParametric::step(float dt) {
+    Observer4::step(dt);
 }

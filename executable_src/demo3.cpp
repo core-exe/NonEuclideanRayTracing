@@ -16,35 +16,9 @@ using namespace std;
 // this demo tests relativistic observer.
 
 int main(){
-    float sc_radius = 1;
-    Geometry4* geometry = new FlatGeometry();
+    float sc_radius = 1.0;
+    Geometry4* geometry = new SchwartzchildGeometry(1.0);
     Group* group = new Group(geometry);
-    Plane* mirror = new Plane(Vector3f(0, 0, -5.0), Vector3f(1,0,0), Vector3f(0,1,0), new Surface(
-        [](Vector3f pos)->float{return 1.0;},
-        [](Vector3f pos)->float{return 1.0;},
-        [](Vector3f pos)->float{return 0.6;},
-        [](Vector3f pos)->float{return 0.4;},
-        [](Vector3f pos)->Vector3f{return Vector3f(1.0);},
-        [](Vector3f pos)->Vector3f{return Vector3f();},
-        [](Vector3f pos)->Vector3f{
-            float grid_length = 5.0;
-            float ratio = 0.2;
-            Vector3f in_pos = pos / grid_length;
-            if(in_pos[0] - floor(in_pos[0]) < ratio / 2 || in_pos[1] - floor(in_pos[1]) < ratio / 2 || ceil(in_pos[0]) - in_pos[0] < ratio / 2 || ceil(in_pos[1]) - in_pos[1] < ratio / 2)
-                return Vector3f(.25);
-            else
-                return Vector3f();
-        }
-    ));
-    //1.0, 1.0, 0.6, 0.4, Vector3f(1), Vector3f(0.0), Vector3f(.125)
-    mirror->name = "Mirror";
-    group->add_object(mirror);
-
-    Ball* ball = new Ball(2.0, Vector3f(), new Surface(
-        1.0, 1.5, 0.2, 0.2, Vector3f(1.0, 0.8, 0.8), Vector3f(1.0, 0.4, 0.4), Vector3f(0.7)
-    ));
-    group->add_object(ball);
-    
 
     float view_pos_theta = 0.4;
     float view_pos_phi = 0.2;
