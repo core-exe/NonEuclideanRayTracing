@@ -30,5 +30,6 @@ class Scene4 {
     Vector3f get_color(Ray4 ray, bool direct, bool debug);
     Vector3f get_color(float x, float y, bool debug);
     double move_camera(float delta_t);
+    bool scene_end();
     Image shot(int save_interval = -1, string save_name = string("tmp"));
 };

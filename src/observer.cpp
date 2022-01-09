@@ -142,7 +142,7 @@ void GyroDifferential::step(float dt){
     Observer4::step(dt);
 }
 
-HorizontalDifferential::HorizontalDifferential(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation, vector<Vector4f> space_direction) {
+HorizontalDifferential::HorizontalDifferential(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation) {
     t = 0;
     r = _r;
     dr = _dr;
@@ -180,7 +180,7 @@ void GyroParametric::step(float dt) {
     Observer4::step(dt);
 }
 
-HorizontalParametric::HorizontalParametric(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func, vector<Vector4f> space_direction) {
+HorizontalParametric::HorizontalParametric(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func) {
     geometry = _geometry;
     r_func = _r_func;
     dr_func = _dr_func;

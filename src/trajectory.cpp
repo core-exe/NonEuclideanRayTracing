@@ -1,6 +1,7 @@
 # include <vecmath.h>
 # include <vector>
 # include <functional>
+# include <iostream>
 # include "trajectory.hpp"
 # include "geometry.hpp"
 # include "metric.hpp"
@@ -96,6 +97,7 @@ void DifferentialTrajectory::update_coor(float dt){
     r = r + dr * dt + 0.5 * ddr * dt * dt;
     dr = dr + ddr * dt;
     t = t + dt;
+    is_ddr_update = false;
 }
 
 ParametricTrajectory::ParametricTrajectory(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func) {

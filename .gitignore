@@ -4,4 +4,4 @@
 /push.sh
 .vscode/
 tmp/
-log
+log.*

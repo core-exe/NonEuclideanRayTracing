@@ -71,9 +71,6 @@ Vector3f Scene4::get_color(Ray4 ray, bool direct = false, bool debug = false){
         }
         cout << endl << endl;
     }
-
-    
-    
     return color;
 }
 
@@ -101,15 +98,20 @@ double Scene4::move_camera(float delta_t){
         float dt = get_dt_geometry(camera->observer);
         if(dt < delta_t)
             delta_t -= dt;
-        else
+        else {
             dt = delta_t;
             stop = true;
+        }
         proper_time_total += camera->observer->get_proper_time(dt);
         camera->observer->step(dt);
         if(stop)
             break;
     }
     return proper_time_total;
+}
+
+bool Scene4::scene_end() {
+    return geometry->is_terminal(camera->observer);
 }
 
 Image Scene4::shot(int save_interval, string name){

@@ -39,7 +39,7 @@ class SchwartzchildGeometry: public Geometry4{
     float stop_eps;
     float r_min, r_max;
 
-    SchwartzchildGeometry(float radius, float _dt_eps = 1e-3, float _stop_eps = 1e-3, float _r_min = 1e-4, float _r_max = 100);
+    SchwartzchildGeometry(float radius, float _dt_eps = 1e-3, float _stop_eps = 1e-3, float _r_min = 0.01, float _r_max = 100);
 
     float get_dt(Trajectory4* trajectory);
     bool is_terminal(Ray4 ray, Hit4& hit);

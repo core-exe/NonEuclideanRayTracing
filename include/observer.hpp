@@ -55,21 +55,25 @@ class HorizontalObserver4: public Observer4{
 };
 
 class GyroDifferential: public GyroscopeObserver4, public DifferentialTrajectory{
+    public:
     GyroDifferential(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation, vector<Vector4f> space_direction);
     void step(float dt);
 };
 
 class HorizontalDifferential: public HorizontalObserver4, public DifferentialTrajectory{
-    HorizontalDifferential(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation, vector<Vector4f> space_direction);
+    public:
+    HorizontalDifferential(Vector4f _r, Vector4f _dr, Geometry4* _geometry, function<Vector4f(Vector4f, Vector4f, Matrix4f, float[4][4][4])> _motion_equation);
     void step(float dt);
 };
 
 class GyroParametric: public GyroscopeObserver4, public ParametricTrajectory{
+    public:
     GyroParametric(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func, vector<Vector4f> space_direction);
     void step(float dt);
 };
 
 class HorizontalParametric: public HorizontalObserver4, public ParametricTrajectory{
-    HorizontalParametric(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func, vector<Vector4f> space_direction);
+    public:
+    HorizontalParametric(Geometry4* _geometry, function<Vector4f(float)> _r_func, function<Vector4f(float)> _dr_func, function<Vector4f(float)> _ddr_func);
     void step(float dt);
 };

@@ -12,6 +12,7 @@ Camera4::Camera4(int _height, int _width, float _fov, Observer4* _observer, Matr
     width = _width;
     f = atan(_fov/2);
     observer = _observer;
+    observer->correction();
     perspective = _perspective;
 }
 

@@ -56,7 +56,7 @@ float SchwartzchildGeometry::get_dt(Trajectory4* trajectory) {
     float r = trajectory->r.yzw().length();
     float v = trajectory->dr.yzw().length();
     float a = trajectory->get_ddr().yzw().length();
-    return min(min(dt_eps*r/v, sqrt(2*dt_eps*r/a)), dt_eps*r/(-trajectory->dr[0]));
+    return min(min(dt_eps*r/v, sqrt(2*dt_eps*r/a)), dt_eps*r/(abs(-trajectory->dr[0]))) * pow(min(r, radius) / radius, 0.5);
 }
 
 bool SchwartzchildGeometry::is_terminal(Ray4 ray, Hit4& hit){
@@ -71,7 +71,7 @@ bool SchwartzchildGeometry::is_terminal(Ray4 ray, Hit4& hit){
         return true;
     }
     else if(r>r_max){
-        hit.hit_texture = new PureTexture(Vector3f(0.05,0.05,0.05));
+        hit.hit_texture = new PureTexture(Vector3f(0.05,0.05,0.45));
         return true;
     }
     return false;
@@ -79,5 +79,7 @@ bool SchwartzchildGeometry::is_terminal(Ray4 ray, Hit4& hit){
 
 bool SchwartzchildGeometry::is_terminal(Observer4* observer4){
     float r = observer4->r.yzw().length();
-    return r<r_min || r>r_max;
+    bool ret = (r<r_min || r>r_max);
+    //cout << "r = " << r << ", is terminal: " << ret << endl;
+    return ret;
 }
