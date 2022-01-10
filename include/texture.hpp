@@ -4,6 +4,8 @@
 # include <functional>
 using namespace std;
 
+class Image;
+
 class Texture {
     public:
     Texture(){}
@@ -50,6 +52,18 @@ class Surface: public Texture{
         function<Vector3f(Vector3f)> _t_color_map,
         function<Vector3f(Vector3f)> _l_color_map);
     ~Surface();
+
+    vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);
+    Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);
+};
+
+class TerminalTexture: public Texture { // no reflection and transmission.
+    public:
+    function<Vector3f(Vector3f, Image*)> color_map;
+    Image* img;
+    TerminalTexture(){}
+    TerminalTexture(function<Vector3f(Vector3f, Image*)> _color_map, Image* _img);
+    ~TerminalTexture(){}
 
     vector<Vector2f> get_out_cosine(Vector3f in_pos, float in_cosine);
     Vector3f color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color);

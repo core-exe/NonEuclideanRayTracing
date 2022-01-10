@@ -1,6 +1,7 @@
 # include <vecmath.h>
 # include <vector>
 # include "texture.hpp"
+# include "image.hpp"
 # include <iostream>
 using namespace std;
 
@@ -118,4 +119,18 @@ Vector3f Surface::color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_i
     Vector3f l_color = l_color_map(in_pos), r_color = r_color_map(in_pos), t_color = t_color_map(in_pos);
     float r_eff = out_importance[0], t_eff = out_importance[1];
     return (1-r_eff-t_eff)*l_color + r_eff*out_color[0]*r_color + t_eff*out_color[1]*t_color;
+}
+
+TerminalTexture::TerminalTexture(function<Vector3f(Vector3f, Image*)> _color_map, Image* _img) {
+    color_map = _color_map;
+    img = _img;
+}
+
+vector<Vector2f> TerminalTexture::get_out_cosine(Vector3f in_pos, float in_cosine){
+    // the first direction is importance
+    return vector<Vector2f>();
+}
+
+Vector3f TerminalTexture::color(Vector3f in_pos, Vector3f in_cosine, vector<float> out_importance, vector<Vector3f> out_color) {
+    return color_map(in_pos, img);
 }

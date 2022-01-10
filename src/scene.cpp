@@ -20,8 +20,8 @@ Scene4::Scene4(Geometry4* _geometry, Group* _group, Camera4* _camera){
     camera = _camera;
 }
 
-float Scene4::get_dt_geometry(Trajectory4* trajectory) {
-    float t_geometry = geometry->get_dt(trajectory);
+float Scene4::get_dt_geometry(Ray4* ray) {
+    float t_geometry = geometry->get_dt_ray(ray);
     return t_geometry;
 }
 
@@ -95,7 +95,7 @@ double Scene4::move_camera(float delta_t){
     double proper_time_total=0.;
     while (!geometry->is_terminal(camera->observer))
     {
-        float dt = get_dt_geometry(camera->observer);
+        float dt = geometry->get_dt_observer(camera->observer);
         if(dt < delta_t)
             delta_t -= dt;
         else {
@@ -118,7 +118,7 @@ Image Scene4::shot(int save_interval, string name){
     Image img = Image(camera->width, camera->height);
     img.SetAllPixels(Vector3f());
     for(int x=0; x<camera->width; x++){
-        printf("rendering x = %4d / %4d\n", x, camera->width);
+        //printf("rendering x = %4d / %4d\n", x, camera->width);
         Vector3f color_total = Vector3f(); 
         # pragma omp parallel for shared(color_total, img, x) num_threads(32)
         for(int y=0; y<camera->height; y++){

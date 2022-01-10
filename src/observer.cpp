@@ -79,7 +79,7 @@ void Observer4::step(float dt){
 }
 
 float Observer4::get_proper_time(float dt){
-    return dt*sqrt(dot(dr, dr, g));
+    return dt*sqrt(-dot(dr, dr, g));
 }
 
 GyroscopeObserver4::GyroscopeObserver4(Vector4f _r, Vector4f _dr, Geometry4* _geometry, vector<Vector4f> space_direction):Observer4(_r, _dr, _geometry, space_direction){

@@ -1,5 +1,6 @@
 # pragma once
 # include <vecmath.h>
+# include "texture.hpp"
 
 class Hit4;
 class Ray4;
@@ -17,7 +18,8 @@ class Geometry4 {
     Geometry4(Metric4* _g);
     ~Geometry4(){}
 
-    virtual float get_dt(Trajectory4* trajectory);
+    virtual float get_dt_ray(Ray4* trajectory);
+    virtual float get_dt_observer(Observer4* observer);
     virtual bool is_terminal(Ray4 ray, Hit4& hit);
     virtual bool is_terminal(Observer4* observer);
 };
@@ -35,13 +37,15 @@ class FlatGeometry: public Geometry4 {
 class SchwartzchildGeometry: public Geometry4{
     public:
     float radius;
-    float dt_eps;
+    float ray_eps, obs_eps;
     float stop_eps;
     float r_min, r_max;
+    Texture *max_step_texture, *horizon_texture, *outer_texture;
 
-    SchwartzchildGeometry(float radius, float _dt_eps = 1e-3, float _stop_eps = 1e-3, float _r_min = 0.01, float _r_max = 100);
+    SchwartzchildGeometry(float _radius, float _ray_eps = 1e-3, float _obs_eps = 2e-4, float _stop_eps = 1e-3, float _r_min = 0.075, float _r_max = 1e3, Texture* _max_step_texture = new PureTexture(Vector3f()), Texture* _horizon_texture = new PureTexture(Vector3f()), Texture* _outer_texture = new PureTexture(Vector3f(0.05)));
 
-    float get_dt(Trajectory4* trajectory);
+    float get_dt_ray(Ray4* trajectory);
+    float get_dt_observer(Observer4* observer);
     bool is_terminal(Ray4 ray, Hit4& hit);
     bool is_terminal(Observer4* observer);
 };

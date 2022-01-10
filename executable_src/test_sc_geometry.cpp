@@ -8,7 +8,7 @@
 // not available right now
 
 int main(){
-    SchwartzchildGeometry* geometry = new SchwartzchildGeometry((float)1.0);
+    SchwartzchildGeometry* geometry = new SchwartzchildGeometry(1.0);
     float x;
     cin >> x;
     float r_min = 1e-6, r_max = 100;
@@ -21,7 +21,7 @@ int main(){
         Vector4f pos = geodesic.r;
         if(r<r_min || r>r_max)
             break;
-        float dt = geometry->get_dt(&geodesic);
+        float dt = geometry->get_dt_ray(&geodesic);
         geodesic.step(dt);
         printf("n = %05d, t = %.5f, x = %+.5f, y = %+.5f, r = %.5f\n", i, pos[0], pos[1], pos[2], r);
     }
